@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+if [[ $(getent passwd squeezeboxserver) = "" ]]; then
+    useradd -M -s /usr/sbin/nologin -c "Squeezebox Server user" squeezeboxserver
+fi
+
 cat > /etc/systemd/system/docker.logitechmediaserver.service << 'EOF'
 [Unit]
 Description=LogitechMediaServer Service
@@ -7,6 +11,8 @@ After=docker.service
 Requires=docker.service
 
 [Service]
+User=squeezeboxserver
+Group=squeezeboxserver
 TimeoutStartSec=0
 Restart=always
 ExecStartPre=-/usr/bin/docker exec logitechmediaserver stop
