@@ -15,10 +15,10 @@ Requires=docker.service
 [Service]
 TimeoutStartSec=0
 Restart=always
-ExecStartPre=-/usr/bin/docker exec logitechmediaserver stop
+ExecStartPre=-/usr/bin/docker stop logitechmediaserver
 ExecStartPre=-/usr/bin/docker rm -f logitechmediaserver
-ExecStart=/usr/bin/docker run -d -u -u $user_id -p 9000:9000 -p 9090:9090 -p 3483:3483 -p 3483:3483/udp -v /home/logitechmediaserver/server:/srv/squeezebox -v /home/logitechmediaserver/music:/srv/music -v /home/logitechmediaserver/playlists:/srv/playlists --name logitechmediaserver logitechmediaserver
-ExecStop=/usr/bin/docker exec logitechmediaserver stop
+ExecStart=/usr/bin/docker run -u $user_id -p 9000:9000 -p 9090:9090 -p 3483:3483 -p 3483:3483/udp -v /home/logitechmediaserver/server:/srv/squeezebox -v /home/logitechmediaserver/music:/srv/music -v /home/logitechmediaserver/playlists:/srv/playlists --name logitechmediaserver logitechmediaserver
+ExecStop=/usr/bin/docker stop logitechmediaserver
  
 [Install]
 WantedBy=default.target
